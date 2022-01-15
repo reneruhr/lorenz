@@ -3,7 +3,8 @@
 struct ContainerAlgebra
 {
     template<typename S1, typename S2, typename S3, typename Operation>
-    void for_each3 (S1& s1, S2& s2, S3& s3, Operation op) const{
+    void for_each3 (S1& s1, S2& s2, S3& s3, Operation op) const
+    {
         using std::begin;
         using std::end;
 
@@ -16,7 +17,8 @@ struct ContainerAlgebra
     }
 
     template<typename S1, typename S2, typename S3, typename S4, typename S5, typename S6, typename Operation>
-    void for_each6 (S1& s1, S2& s2, S3& s3, S4& s4, S5& s5, S6& s6, Operation op) const {
+    void for_each6 (S1& s1, S2& s2, S3& s3, S4& s4, S5& s5, S6& s6, Operation op) const
+    {
         using std::begin;
         using std::end;
 
@@ -65,24 +67,25 @@ struct DefaultOperations
 };
 
 template <typename StateType>
-void Resize(const StateType& in, StateType & out){
+void Resize(const StateType& in, StateType & out)
+{
     using std::size;
     out.resize(size(in));
 }
 
 template <typename Scalar, std::size_t n>
-void Resize(const std::array<Scalar, n>&, std::array<Scalar, n>&){
-}
+void Resize(const std::array<Scalar, n>&, std::array<Scalar, n>&) {}
 
 template <typename StateType,
-        typename Scalar = double,
-        typename Time= Scalar,
-        typename Algebra = ContainerAlgebra,
-        typename Operations = DefaultOperations>
+          typename Scalar = double,
+          typename Time= Scalar,
+          typename Algebra = ContainerAlgebra,
+          typename Operations = DefaultOperations>
 class RungeKutta4{
 public:
     template <typename System>
-    void DoStep(System& system, StateType& x, Time t, Time dt){
+    void DoStep(System& system, StateType& x, Time t, Time dt)
+    {
         AdjustSize(x);
         const Scalar one = 1;
         const Time dt2 = dt/2, dt3 = dt/3, dt6 = dt/6;
@@ -104,7 +107,8 @@ private:
     StateType x_tmp_, k1_, k2_, k3_, k4_;
     Algebra algebra_;
 
-    void AdjustSize(const StateType& x){
+    void AdjustSize(const StateType& x)
+    {
         Resize(x, x_tmp_);
         Resize(x, k1_);
         Resize(x, k2_);

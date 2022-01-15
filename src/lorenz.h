@@ -1,15 +1,26 @@
+#pragma once
+#include <array>
 #include <vector>
-using StateType = std::vector<double>;
+namespace lorenz {
+using Vec3d= std::vector<double>;
+using Vectors = std::vector<Vec3d>;
 
-struct Lorenz
+struct LorenzParameters
 {
-    const double sigma_, R_, b_;
-    Lorenz(const double sigma, const double R, const double b)
-    : sigma_(sigma), R_(R), b_(b) {}
-
-    void operator() (const StateType& x, StateType& dxdt, double ) const{
-        dxdt[0] = sigma_ *(x[1]-x[0]);
-        dxdt[1] = R_ * x[0] - x[1] - x[0] * x[2];
-        dxdt[2] = -b_ * x[2] + x[0] * x[1];
-    }
+    LorenzParameters(double sigma = 10., double R = 28., double b = 8./3., Vec3d initial = {10.,1.,1.})
+    : sigma_(sigma), R_(R), b_(b), initial_(initial) {}
+    double sigma_, R_,b_;
+    Vec3d initial_;
 };
+
+class Lorenz
+{
+public:
+    Lorenz(int steps = 5000, double dt = 0.01, LorenzParameters paras = LorenzParameters());
+
+    std::shared_ptr<Vectors> Data() const { return data_; }
+
+private:
+    std::shared_ptr<Vectors> data_;
+};
+}
