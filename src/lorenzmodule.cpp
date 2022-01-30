@@ -7,7 +7,16 @@ auto lorenz::CreateLorenzModule(int w, int h) -> std::unique_ptr<BasicModule>
     auto graph = CreateFloatData(*lorenz.Data());
     auto scene = static_pointer_cast<BasicScene>(module->GetScene());
 
-    scene->Add(*graph, GL_POINTS);
+
+    auto indices = std::vector<unsigned int>(std::size(*graph));
+    std::iota(std::begin(indices), std::end(indices), 0);
+
+    scene->Add(indices, *graph, GL_LINE_STRIP);
+
+    auto points =  static_pointer_cast<BasicObject>(scene->Add(indices, *graph, GL_POINTS));
+    points->SetColor(glm::vec3(1.,1.,0));
+    static_cast<kipod::GLRenderLayout*>(points->Layout())->SetSubIndex(10,0);
+    glPointSize(5.);
     return std::move(module);
 }
 
