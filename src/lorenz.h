@@ -21,7 +21,9 @@ public:
 
     std::shared_ptr<Vectors> Data() const { return data_; }
 
+    auto GetSteps()  { return steps_; }
 private:
+    std::size_t steps_;
     std::shared_ptr<Vectors> data_;
 };
 }

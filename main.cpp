@@ -10,6 +10,8 @@ int main()
     kipod.Init();
     auto [w,h] = kipod.WindowSize();
     kipod.Add(CreateLorenzModule(w,h));
+
+
     kipod.Run();
     kipod.ShutDown();
     return 0;

@@ -6,7 +6,7 @@ namespace lorenz
 {
 using RK4 = RungeKutta4<Vec3d, double, double, ContainerAlgebra, DefaultOperations>;
 
-Lorenz::Lorenz(int steps, double dt, LorenzParameters paras) : data_(std::make_shared<Vectors>(Vectors{paras.initial_}))
+Lorenz::Lorenz(int steps, double dt, LorenzParameters paras) : steps_(steps), data_(std::make_shared<Vectors>(Vectors{paras.initial_}))
 {
     auto stepper = RK4{};
     auto lorenz = LorenzSystem(paras.sigma_, paras.R_, paras.b_);
